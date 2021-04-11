@@ -1,5 +1,6 @@
 import 'package:expence_tracker/transaction.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,8 +17,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  List<Card> lc = [];
-
+  
   final List<Transaction> transactions = [
     Transaction(
       id: "t1",
@@ -95,7 +95,7 @@ class MyHomePage extends StatelessWidget {
                               color: Colors.black.withOpacity(0.7),
                             ),
                           ),
-                          Text(tx.date.toString(), 
+                          Text(DateFormat.yMMMEd().add_jm().format(DateTime.now()), 
                             style: TextStyle(
                               color: Colors.grey,
                             ),
