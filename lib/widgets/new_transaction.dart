@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
 
-class NewTransaction extends StatelessWidget {
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
-
+// if the data of the title and the amount is getting lost when clicked on the
+// other then make this widget a stateful widget.
+// 
+// this will add widget. before addNewTransaction,
+// this widget is a special thing to access the class
+class NewTransaction extends StatefulWidget {
   final Function addNewTransaction;
+
+  NewTransaction(this.addNewTransaction);
+
+  @override
+  _NewTransactionState createState() => _NewTransactionState();
+}
+
+class _NewTransactionState extends State<NewTransaction> {
+  final titleController = TextEditingController();
+
+  final amountController = TextEditingController();
 
   void submitData() {
     final titleInput = titleController.text;
@@ -13,17 +26,17 @@ class NewTransaction extends StatelessWidget {
     if (titleInput.isEmpty || amountInput <= 0) {
       return;
     }
-    addNewTransaction(
+    widget.addNewTransaction(
       titleInput,
       amountInput,
     );
+    Navigator.of(context).pop();
   }
-
-  NewTransaction(this.addNewTransaction);
 
   @override
   Widget build(BuildContext context) {
     return Card(
+      // elevation: 0,
       child: Container(
         padding: EdgeInsets.all(15),
         child: Column(
@@ -54,7 +67,7 @@ class NewTransaction extends StatelessWidget {
                   ),
                 ),
                 foregroundColor:
-                    MaterialStateProperty.all(Colors.purple.shade500),
+                    MaterialStateProperty.all(Theme.of(context).primaryColor),
               ),
               child: const Text("Add Transaction"),
             ),
