@@ -1,3 +1,4 @@
+import 'package:expence_tracker/widgets/chart.dart';
 import 'package:expence_tracker/widgets/new_transaction.dart';
 import 'package:expence_tracker/widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
@@ -15,10 +16,9 @@ class MyApp extends StatelessWidget {
       home: MyHomePage(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.green,
-        accentColor: Colors.amber,
-        fontFamily: 'Nunito'
-      ),
+          primarySwatch: Colors.green,
+          accentColor: Colors.amber,
+          fontFamily: 'Nunito'),
     );
   }
 }
@@ -30,18 +30,18 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> userTransactions = [
-    // Transaction(
-    //   id: "t1",
-    //   title: "Milk",
-    //   amount: 85,
-    //   date: DateTime.now(),
-    // ),
-    // Transaction(
-    //   id: "t2",
-    //   title: "Juice",
-    //   amount: 30,
-    //   date: DateTime.now(),
-    // ),
+    Transaction(
+      id: "t1",
+      title: "Milk",
+      amount: 85,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: "t2",
+      title: "Juice",
+      amount: 30,
+      date: DateTime.now(),
+    ),
   ];
 
   void addNewTransaction(String title, double amount) {
@@ -71,6 +71,12 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  List<Transaction> get recentTransactions {
+    return userTransactions.where((tx) {
+      return tx.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,17 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // we want to divide homepage into chart and list 1 above other
 
         children: [
-          Container(
-            width: double.infinity,
-            height: 50,
-            child: Center(
-              child: Card(
-                elevation: 5,
-                color: Colors.deepPurple.shade400,
-                child: Text("CHART!"),
-              ),
-            ),
-          ),
+          Chart(recentTransactions),
           TransactionList(userTransactions),
         ],
       ),

@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> userTransactions;
+  static const int $chi = 0x03C7;
   TransactionList(this.userTransactions);
   @override
   Widget build(BuildContext context) {
