@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 // if the data of the title and the amount is getting lost when clicked on the
 // other then make this widget a stateful widget.
-// 
+//
 // this will add widget. before addNewTransaction,
 // this widget is a special thing to access the class
 class NewTransaction extends StatefulWidget {
@@ -16,21 +17,39 @@ class NewTransaction extends StatefulWidget {
 
 class _NewTransactionState extends State<NewTransaction> {
   final titleController = TextEditingController();
-
   final amountController = TextEditingController();
+  DateTime chosenDate = DateTime.now();
 
   void submitData() {
     final titleInput = titleController.text;
     final amountInput = double.parse((amountController.text));
-
+    final dateInput = chosenDate;
     if (titleInput.isEmpty || amountInput <= 0) {
       return;
     }
     widget.addNewTransaction(
       titleInput,
       amountInput,
+      dateInput,
     );
     Navigator.of(context).pop();
+  }
+
+  void _selectDate() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2021, 1, 1),
+      lastDate: DateTime.now(),
+    ).then((selectedDate) {
+      if (selectedDate == null) {
+        return;
+      }
+      setState(() {
+        // very important as if not wrapped in setState, no changes are reflected in thr text fiels
+        chosenDate = selectedDate;
+      });
+    });
   }
 
   @override
@@ -54,22 +73,26 @@ class _NewTransactionState extends State<NewTransaction> {
               keyboardType: TextInputType.number,
               onSubmitted: (_) => submitData(),
             ),
-            OutlinedButton(
-              onPressed: submitData,
-              style: ButtonStyle(
-                shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(
-                    // borderRadius: BorderRadius.circular(8),
-                    side: BorderSide(
-                      color: Colors.purple.shade300,
-                      style: BorderStyle.solid,
-                    ),
-                  ),
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              children: [
+                Text(DateFormat.yMd().format(chosenDate)),
+                IconButton(
+                  onPressed: _selectDate,
+                  icon: Icon(Icons.date_range_rounded),
                 ),
-                foregroundColor:
-                    MaterialStateProperty.all(Theme.of(context).primaryColor),
-              ),
-              child: const Text("Add Transaction"),
+              ],
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            FloatingActionButton(
+              onPressed: submitData,
+              child: Icon(Icons.check_rounded),
+              backgroundColor: Theme.of(context).primaryColor,
+              foregroundColor: Colors.white,
             ),
           ],
         ),

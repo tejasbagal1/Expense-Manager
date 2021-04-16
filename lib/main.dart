@@ -42,18 +42,48 @@ class _MyHomePageState extends State<MyHomePage> {
       amount: 30,
       date: DateTime.now(),
     ),
+    Transaction(
+      id: "t1",
+      title: "Milk",
+      amount: 85,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: "t2",
+      title: "Juice",
+      amount: 30,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: "t1",
+      title: "Milk",
+      amount: 85,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: "t2",
+      title: "Juice",
+      amount: 30,
+      date: DateTime.now(),
+    ),
   ];
 
-  void addNewTransaction(String title, double amount) {
+  void addNewTransaction(String title, double amount, DateTime date) {
     Transaction newTx = Transaction(
       id: DateTime.now().toString(),
       title: title,
       amount: amount,
-      date: DateTime.now(),
+      date: date,
     );
 
     setState(() {
       userTransactions.add(newTx);
+    });
+  }
+
+  void deleteTransaction(String id) {
+    setState(() {
+      userTransactions.removeWhere((tx) => tx.id == id);
     });
   }
 
@@ -101,7 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
         children: [
           Chart(recentTransactions),
-          TransactionList(userTransactions),
+          TransactionList(userTransactions, deleteTransaction),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

@@ -45,13 +45,22 @@ class Chart extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            ...allTransactionsOfTheDayGrouped.map((wtx) {
-              return ChartBar(
-                wtx['day'].toString(),
-                wtx['totalAmount'] as double,
-                (wtx['totalAmount'] as double)/totalSpendingOfLast7Days,
-              );
-            }).toList()
+            ...allTransactionsOfTheDayGrouped
+                .map((wtx) {
+                  return Flexible(
+                    fit: FlexFit.tight,
+                    child: ChartBar(
+                      wtx['day'].toString(),
+                      wtx['totalAmount'] as double,
+                      totalSpendingOfLast7Days > 0.0
+                          ? (wtx['totalAmount'] as double) /
+                              totalSpendingOfLast7Days
+                          : (wtx['totalAmount'] as double),
+                    ),
+                  );
+                })
+                .toList()
+                .reversed
           ],
         ),
       ),
