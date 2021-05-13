@@ -1,6 +1,26 @@
-# expence_tracker
+# Expense Manager
 
-A new Flutter project.
+This is a **Expense manager** App made with **Flutter**. This app is very useful when u consider money management. it has an interesting chart interface to show the money spent on last 7 days. user can add <em>transaction</em>, mention **date** and description of transaction for future reference. 
+
+## FeatureS
+
+|  UI  | Feature |
+| ------| ------|
+| ✔ | Can save transaction records
+| ✔ |   bar charts to see weekly mone spent
+| ✔ |    date feature
+| ✔ |    helps in easy analysis of money flow.
+
+## To play the game download the **APK** above!
+
+
+## Screenshots
+
+<img src="https://user-images.githubusercontent.com/58545228/118114016-a8375700-b404-11eb-8d7f-f74ba7600b13.PNG"/>
+
+<img src="https://user-images.githubusercontent.com/58545228/118114025-aa011a80-b404-11eb-8d22-c473a428d50c.PNG"/>
+
+
 
 ## Getting Started
 
